@@ -171,6 +171,7 @@
 				TargetAttributes = {
 					D3EFEB051CD3C43400014542 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 4G392XHTG6;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -180,6 +181,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -341,9 +343,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4G392XHTG6;
 				INFOPLIST_FILE = CardGameV2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.brianbroom.CardGameV2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectGabriel.Games;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -353,9 +356,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4G392XHTG6;
 				INFOPLIST_FILE = CardGameV2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.brianbroom.CardGameV2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.projectGabriel.Games;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
