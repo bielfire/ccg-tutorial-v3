@@ -22,15 +22,69 @@
 
 import SpriteKit
 
+enum CardLevel :CGFloat {
+    case board = 10
+    case moving = 100
+    case enlarged = 200
+}
+
 class GameScene: SKScene {
-
-  override func didMove(to view: SKView) {
-    let bg = SKSpriteNode(imageNamed: "bg_blank")
-    bg.anchorPoint = CGPoint.zero
-    bg.position = CGPoint.zero
-    addChild(bg)
     
+    // MARK: - Methods
     
+    // MARK: - Override
+    
+    override func didMove(to view: SKView) {
+        let bg = SKSpriteNode(imageNamed: "bg_blank")
+        bg.anchorPoint = CGPoint.zero
+        bg.position = CGPoint.zero
+        addChild(bg)
+        
+        let wolf = Card(cardType: .wolf)
+        wolf.position = CGPoint(x: 100, y: 200)
+        addChild(wolf)
+        
+        let bear = Card(cardType: .bear)
+        bear.position = CGPoint(x: 300, y: 200)
+        addChild(bear)
+        
     }
-
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)           // 1
+            if let card = atPoint(location) as? Card {        // 2
+                card.position = location
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            if let card = atPoint(location) as? Card {
+                card.zPosition = CardLevel.moving.rawValue
+                card.removeAction(forKey: "drop")
+                card.run(SKAction.scale(to: 1.9, duration: 0.25), withKey: "pickup")
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            if let card = atPoint(location) as? Card {
+                card.zPosition = CardLevel.board.rawValue
+                card.removeFromParent()
+                card.removeAction(forKey: "pickup")
+                card.run(SKAction.scale(to: 1.5, duration: 0.25), withKey: "drop")
+                addChild(card)
+            }
+        }
+    }
+    
+    // MARK: - Properties
+    
+    
+    
 }
