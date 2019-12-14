@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43D3E23623A45EB700C8ED8C /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D3E23523A45EB700C8ED8C /* CardType.swift */; };
+		43D3E23823A4644D00C8ED8C /* CardLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D3E23723A4644D00C8ED8C /* CardLevel.swift */; };
 		D39654F41CD45F10002A5E99 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3EFEB2F1CD3D8A100014542 /* OpenSans-Bold.ttf */; };
 		D3EFEB0A1CD3C43400014542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EFEB091CD3C43400014542 /* AppDelegate.swift */; };
 		D3EFEB0E1CD3C43400014542 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EFEB0D1CD3C43400014542 /* GameScene.swift */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43D3E23523A45EB700C8ED8C /* CardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardType.swift; sourceTree = "<group>"; };
+		43D3E23723A4644D00C8ED8C /* CardLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLevel.swift; sourceTree = "<group>"; };
 		D3EFEB061CD3C43400014542 /* CardGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3EFEB091CD3C43400014542 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3EFEB0D1CD3C43400014542 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 			children = (
 				D3EFEB0D1CD3C43400014542 /* GameScene.swift */,
 				D3EFEB301CD3D9D400014542 /* Card.swift */,
+				43D3E23523A45EB700C8ED8C /* CardType.swift */,
+				43D3E23723A4644D00C8ED8C /* CardLevel.swift */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -220,9 +226,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43D3E23823A4644D00C8ED8C /* CardLevel.swift in Sources */,
 				D3EFEB0E1CD3C43400014542 /* GameScene.swift in Sources */,
 				D3EFEB101CD3C43400014542 /* GameViewController.swift in Sources */,
 				D3EFEB0A1CD3C43400014542 /* AppDelegate.swift in Sources */,
+				43D3E23623A45EB700C8ED8C /* CardType.swift in Sources */,
 				D3EFEB311CD3D9D400014542 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

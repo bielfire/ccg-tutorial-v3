@@ -22,12 +22,6 @@
 
 import SpriteKit
 
-enum CardLevel :CGFloat {
-    case board = 10
-    case moving = 100
-    case enlarged = 200
-}
-
 class GameScene: SKScene {
     
     // MARK: - Methods
@@ -41,13 +35,17 @@ class GameScene: SKScene {
         addChild(bg)
         
         let wolf = Card(cardType: .wolf)
-        wolf.position = CGPoint(x: 100, y: 200)
+        wolf.position.x = 100
+        wolf.position.y = 200
         addChild(wolf)
         
         let bear = Card(cardType: .bear)
         bear.position = CGPoint(x: 300, y: 200)
         addChild(bear)
         
+        let dragon = Card(cardType: .dragon)
+        dragon.position = CGPoint(x: 450, y: 200)
+        addChild(dragon)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -55,6 +53,7 @@ class GameScene: SKScene {
             let location = touch.location(in: self)           // 1
             if let card = atPoint(location) as? Card {        // 2
                 card.position = location
+                if card.enlarged { return }
             }
         }
     }
@@ -63,9 +62,14 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             if let card = atPoint(location) as? Card {
-                card.zPosition = CardLevel.moving.rawValue
-                card.removeAction(forKey: "drop")
-                card.run(SKAction.scale(to: 1.9, duration: 0.25), withKey: "pickup")
+                if touch.tapCount > 1 {
+                    card.enlarge()
+                    return
+                }
+                
+                if card.enlarged {return}
+                
+                card.toggleWiggle(true)
             }
         }
     }
@@ -74,17 +78,13 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             if let card = atPoint(location) as? Card {
-                card.zPosition = CardLevel.board.rawValue
-                card.removeFromParent()
-                card.removeAction(forKey: "pickup")
-                card.run(SKAction.scale(to: 1.5, duration: 0.25), withKey: "drop")
-                addChild(card)
+                if card.enlarged { return }
+                
+                card.toggleWiggle(false)
             }
         }
     }
     
     // MARK: - Properties
-    
-    
     
 }

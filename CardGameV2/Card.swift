@@ -22,19 +22,17 @@
 
 import SpriteKit
 
-enum CardType :Int {
-    case wolf,
-    bear,
-    dragon
-}
-
-class Card : SKSpriteNode {
+final class Card: SKSpriteNode {
     
     var damage = 0
-    let damageLabel :SKLabelNode
-    let cardType :CardType
-    let frontTexture :SKTexture
-    let backTexture :SKTexture
+    let damageLabel: SKLabelNode
+    let cardType: CardType
+    var frontTexture: SKTexture!
+    let backTexture: SKTexture
+    var faceUp = true
+    var enlarged = false
+    var savedPosition = CGPoint.zero
+    var largeTexture: SKTexture!
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("NSCoding not supported")
@@ -43,15 +41,8 @@ class Card : SKSpriteNode {
     init(cardType: CardType) {
         self.cardType = cardType
         backTexture = SKTexture(imageNamed: "card_back")
-        
-        switch cardType {
-        case .wolf:
-            frontTexture = SKTexture(imageNamed: "card_creature_wolf")
-        case .bear:
-            frontTexture = SKTexture(imageNamed: "card_creature_bear")
-        case .dragon:
-            frontTexture = SKTexture(imageNamed: "card_creature_dragon")
-        }
+        frontTexture = cardType.texture
+        largeTexture = cardType.largeTexture
         
         damageLabel = SKLabelNode(fontNamed: "OpenSans-Bold")
         damageLabel.name = "damageLabel"
@@ -63,4 +54,66 @@ class Card : SKSpriteNode {
         super.init(texture: frontTexture, color: .clear, size: frontTexture.size())
         addChild(damageLabel)
     }
+    
+    func flip() {
+        if faceUp {
+            self.texture = backTexture
+            damageLabel.isHidden = true
+        }
+            
+        else {
+            self.texture = frontTexture
+            damageLabel.isHidden = false
+        }
+        
+        faceUp = !faceUp
+    }
+    
+    func enlarge() {
+        if enlarged {
+            let slide = SKAction.move(to: savedPosition, duration:0.3)
+            let scaleDown = SKAction.scale(to: 1.0, duration:0.3)
+            run(SKAction.group([slide, scaleDown])) {
+                self.enlarged = false
+                self.zPosition = CardLevel.board.rawValue
+            }
+        }
+            
+        else {
+            enlarged = true
+            savedPosition = position
+            
+            texture = largeTexture
+            zPosition = CardLevel.enlarged.rawValue
+            
+            if let parent = parent {
+                removeAllActions()
+                zRotation = 0
+                let newPosition = CGPoint(x: parent.frame.midX, y: parent.frame.midY)
+                let slide = SKAction.move(to: newPosition, duration:0.3)
+                let scaleUp = SKAction.scale(to: 5.0, duration:0.3)
+                run(SKAction.group([slide, scaleUp]))
+            }
+        }
+    }
+    
+    func toggleWiggle(_ doWiggle: Bool) {
+           if doWiggle == false {
+               let wiggleIn = SKAction.scaleX(to: 1.0, duration: 0.2)
+               let wiggleOut = SKAction.scaleX(to: 1.2, duration: 0.2)
+               let wiggle = SKAction.sequence([wiggleIn, wiggleOut])
+               
+               run(SKAction.repeatForever(wiggle), withKey: "wiggle")
+               zPosition = CardLevel.moving.rawValue
+               removeAction(forKey: "drop")
+               run(SKAction.scale(to: 1.3, duration: 0.25), withKey: "pickup")
+            
+           } else {
+               zPosition = CardLevel.board.rawValue
+               removeAction(forKey: "wiggle")
+               removeAction(forKey: "pickup")
+               run(SKAction.scale(to: 1.0, duration: 0.25), withKey: "drop")
+           }
+       }
+    
 }
